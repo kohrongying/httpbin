@@ -1,8 +1,11 @@
 const express = require('express');
-const app = express();
-const crypto = require("crypto")
+const bodyParser = require("body-parser");
+const crypto = require("crypto");
+const { validStatusCodes } = require('./constants');
 
-const port = process.env.PORT || 8080;
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/json', (req, res) => {
   res.send({
@@ -33,10 +36,10 @@ app.get('/json/:id', (req, res) => {
 
 app.get('/status/:statusCode', (req, res) => {
   const statusCode = Number(req.params.statusCode)
-  if (!!statusCode) {
+  if (validStatusCodes.includes(statusCode)) {
     res.status(statusCode).send({ message: `${statusCode} encountered` })
   } else {
-    res.status(502).send({ message: `${req.params.statusCode} is not a valid status code. Please input a number`})
+    res.status(400).send({ message: `${req.params.statusCode} is not a valid status code. Please input a number`})
   }
 })
 
@@ -51,6 +54,4 @@ app.get('/', (req,res) => {
   res.send(response);
 });
 
-app.listen(port, function () {
-  console.log(`Httpbin listening on port ${port}!`)
-})
+module.exports = app;
