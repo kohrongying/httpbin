@@ -19,14 +19,17 @@ const generatePlaceholder = (count) => {
 }
 
 app.get('/json', (req, res) => {
+  console.log("Htpbin received GET /json")
   res.send(generatePlaceholder(1)[0])
 })
 
 app.get('/json/list', (req, res) => {
+  console.log("Htpbin received GET /json/list")
   res.send(generatePlaceholder(4))
 })
 
 app.get('/json/:id', (req, res) => {
+  console.log("Htpbin received GET /json/:id")
   res.send({
     id: req.params.id,
     timestamp: new Date()
@@ -34,6 +37,7 @@ app.get('/json/:id', (req, res) => {
 })
 
 app.get('/status/:statusCode', (req, res) => {
+  console.log("Htpbin received GET /status/:statusCode")
   const statusCode = Number(req.params.statusCode)
   if (validStatusCodes.includes(statusCode)) {
     res.status(statusCode).send({ message: `${statusCode} encountered` })
@@ -43,6 +47,7 @@ app.get('/status/:statusCode', (req, res) => {
 })
 
 app.get('/:echo', (req,res) => {
+  console.log("Htpbin received GET /:echo")
   const response = {
     headers: req.headers,
     params: req.params,
@@ -52,6 +57,7 @@ app.get('/:echo', (req,res) => {
 });
 
 app.post('/:echo', (req,res) => {
+  console.log("Htpbin received POST /:echo")
   const response = {
     headers: req.headers,
     params: req.params,
@@ -62,6 +68,7 @@ app.post('/:echo', (req,res) => {
 });
 
 app.put('/:echo', (req,res) => {
+  console.log("Htpbin received PUT /:echo")
   const response = {
     headers: req.headers,
     params: req.params,
@@ -72,6 +79,7 @@ app.put('/:echo', (req,res) => {
 });
 
 app.delete('/:echo', (req,res) => {
+  console.log("Htpbin received DELETE /:echo")
   const response = {
     headers: req.headers,
     params: req.params,
