@@ -18,6 +18,15 @@ const generatePlaceholder = (count) => {
   return arr;
 }
 
+const echo = (req) => {
+  return {
+    headers: req.headers,
+    params: req.params,
+    query: req.query,
+    body: req.body
+  }
+}
+
 app.get('/json', (req, res) => {
   console.log("Htpbin received GET /json")
   res.send(generatePlaceholder(1)[0])
@@ -48,45 +57,22 @@ app.get('/status/:statusCode', (req, res) => {
 
 app.get('/:echo', (req,res) => {
   console.log("Htpbin received GET /:echo")
-  const response = {
-    headers: req.headers,
-    params: req.params,
-    query: req.query,
-  }
-  res.send(response);
+  res.send(echo(req));
 });
 
 app.post('/:echo', (req,res) => {
   console.log("Htpbin received POST /:echo")
-  const response = {
-    headers: req.headers,
-    params: req.params,
-    query: req.query,
-    body: req.body
-  }
-  res.send(response);
+  res.send(echo(req));
 });
 
 app.put('/:echo', (req,res) => {
   console.log("Htpbin received PUT /:echo")
-  const response = {
-    headers: req.headers,
-    params: req.params,
-    query: req.query,
-    body: req.body
-  }
-  res.send(response);
+  res.send(echo(req));
 });
 
 app.delete('/:echo', (req,res) => {
   console.log("Htpbin received DELETE /:echo")
-  const response = {
-    headers: req.headers,
-    params: req.params,
-    query: req.query,
-    body: req.body
-  }
-  res.send(response);
+  res.send(echo(req));
 });
 
 

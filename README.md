@@ -37,7 +37,7 @@ $ curl 'http://localhost:8080/anything?name=test'
 }
 ```
 
-## POST echo
+### POST echo
 ```bash
 $ curl --request POST http://localhost:8080/anything \
   --header 'Content-Type: application/json' \
