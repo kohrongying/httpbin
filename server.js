@@ -43,8 +43,16 @@ app.get('/status/:statusCode', (req, res) => {
   }
 })
 
-app.get('/', (req,res) => {
-  console.log(req)
+app.get('/:echo', (req,res) => {
+  const response = {
+    headers: req.headers,
+    params: req.params,
+    query: req.query,
+  }
+  res.send(response);
+});
+
+app.post('/:echo', (req,res) => {
   const response = {
     headers: req.headers,
     params: req.params,
@@ -53,5 +61,6 @@ app.get('/', (req,res) => {
   }
   res.send(response);
 });
+
 
 module.exports = app;

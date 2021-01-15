@@ -2,17 +2,16 @@ const request = require('supertest');
 const server = require('../server')
 const assert = require('assert')
 
-isValidObject = (body) => {
+const isValidObject = (body) => {
   assert("id" in body)
   assert("timestamp" in body)
 }
 
-isValidList = (res) => {
+const isValidList = (res) => {
   for (let obj of res.body) {
     isValidObject(obj)
   }
 }
-
 
 describe('GET /json', function() {
   it('responds with json', function(done) {
@@ -89,40 +88,30 @@ describe('GET /status', function() {
 });
 
 
-describe('GET /status', function() {
-  it('responds with 201', function(done) {
+describe('Test echo function', function() {
+  it('Echo GET request', function(done) {
     request(server)
-      .get('/status/201')
+      .get('/echo?name=test&arr=[1,2,3]')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(201)
+      .expect(200)
+      .expect(res => {
+        assert.deepEqual(res.body.query, { name: 'test', arr: '[1,2,3]' })
+      })
       .end(done);
   });
 
-  it('responds with 500', function(done) {
+  it('Echo POST request', function(done) {
+      const body = { name: "test" }
       request(server)
-        .get('/status/500')
+        .post('/echo')
         .set('Accept', 'application/json')
+        .send(body)
         .expect('Content-Type', /json/)
-        .expect(500)
+        .expect(200)
+        .expect(res => {
+          assert.deepEqual(res.body.body, body)
+        })
         .end(done);
-   });
-
-  it('responds with bad request for invalid code', function(done) {
-      request(server)
-        .get('/status/abc')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(400)
-        .end(done);
-  });
-
-  it('responds with bad request for invalid number', function(done) {
-      request(server)
-        .get('/status/888')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(400)
-        .end(done);
-  });
+    });
 });
