@@ -129,4 +129,11 @@ describe('Test echo function', function() {
         .end(done);
    });
 
+  it('Echo DELETE request', function(done) {
+      request(server)
+        .delete('/echo')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .end(done);
+   });
 });

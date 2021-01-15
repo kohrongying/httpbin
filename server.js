@@ -72,4 +72,15 @@ app.put('/:echo', (req,res) => {
   res.send(response);
 });
 
+app.delete('/:echo', (req,res) => {
+  const response = {
+    headers: req.headers,
+    params: req.params,
+    query: req.query,
+    body: req.body
+  }
+  res.send(response);
+});
+
+
 module.exports = app;
