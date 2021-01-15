@@ -113,5 +113,20 @@ describe('Test echo function', function() {
           assert.deepEqual(res.body.body, body)
         })
         .end(done);
-    });
+   });
+
+  it('Echo PUT request', function(done) {
+      const body = { name: "test" }
+      request(server)
+        .put('/echo')
+        .set('Accept', 'application/json')
+        .send(body)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(res => {
+          assert.deepEqual(res.body.body, body)
+        })
+        .end(done);
+   });
+
 });
