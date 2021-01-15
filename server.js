@@ -7,24 +7,23 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const generatePlaceholder = (count) => {
+  let arr = []
+  for (let i=0;i<count;i+=1) {
+    arr.push({
+      id: crypto.randomBytes(16).toString("hex"),
+      timestamp: new Date()
+    })
+  }
+  return arr;
+}
+
 app.get('/json', (req, res) => {
-  res.send({
-    id: crypto.randomBytes(16).toString("hex"),
-    timestamp: new Date()
-  })
+  res.send(generatePlaceholder(1)[0])
 })
 
 app.get('/json/list', (req, res) => {
-  res.send([
-    {
-      id: crypto.randomBytes(16).toString("hex"),
-      timestamp: new Date()
-    },
-    {
-      id: crypto.randomBytes(16).toString("hex"),
-      timestamp: new Date()
-    }
-    ])
+  res.send(generatePlaceholder(4))
 })
 
 app.get('/json/:id', (req, res) => {
